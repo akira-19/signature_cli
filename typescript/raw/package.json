@@ -1,0 +1,22 @@
+{
+  "name": "lib",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest",
+    "sign": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@ethereumjs/rlp": "^5.0.2",
+    "@ethereumjs/util": "^9.1.0",
+    "@types/node": "^22.14.0",
+    "ethereum-cryptography": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.1.1"
+  }
+}
