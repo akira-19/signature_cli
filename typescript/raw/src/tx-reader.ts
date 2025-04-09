@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 // Type 0: Legacy transaction
 export type LegacyTransaction = {
   type: 0;
@@ -135,4 +137,9 @@ const createEIP1559Transaction = (jsonData: any): EIP1559Transaction => {
   }
 
   throw new Error(FORMAT_ERROR_MESSAGE);
+};
+
+export const readTxJsonFromFile = (filePath: string) => {
+  const rawData = fs.readFileSync(filePath, 'utf-8');
+  return JSON.parse(rawData);
 };
