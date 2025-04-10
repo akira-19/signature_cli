@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { ethers } from 'ethers';
 
-describe('署名の検証', () => {
+describe('ethers: signTransaction', () => {
   it('署名されたトランザクションの from アドレスが正しいことを確認する', async () => {
     const wallet = ethers.Wallet.createRandom();
     const expectedAddress = await wallet.getAddress();
