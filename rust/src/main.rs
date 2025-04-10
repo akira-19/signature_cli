@@ -14,7 +14,7 @@ use cli::Args;
 async fn main() -> Result<()> {
     let args = Args::parse();
 
-    let path = args.sign;
+    let path = args.path;
 
     sign_handler(path.as_str()).await?;
 
