@@ -1,6 +1,5 @@
-// readAndValidateTransaction.test.ts
 import { describe, it, expect } from 'vitest';
-import { readAndValidateTransaction } from '../src/tx-reader'; // 適切なファイル名に変更してください
+import { readAndValidateTransaction } from '../src/tx-reader';
 
 describe('readAndValidateTransaction', () => {
   const validJson = {

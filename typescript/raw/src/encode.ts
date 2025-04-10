@@ -11,22 +11,15 @@ export const encodeAndSignTransaction = (
 
   const encoded = RLP.encode(tx);
 
-  const signingPayload = new Uint8Array(1 + encoded.length);
-  signingPayload.set([0x02], 0);
-  signingPayload.set(encoded, 1);
+  const messageHash = createMessageHash(encoded);
 
-  const messageHash = keccak256(signingPayload);
-  const sig = secp256k1.sign(messageHash, privKey, { lowS: true });
+  const signature = secp256k1.sign(messageHash, privKey, { lowS: true });
 
-  const signedPayload = addSignatureToPayload(tx, sig.recovery, sig.r, sig.s);
+  const signedPayload = [...tx, signature.recovery, signature.r, signature.s];
 
   const encodedSigned = RLP.encode(signedPayload);
-  const finalTx = new Uint8Array(1 + encodedSigned.length);
-  finalTx.set([0x02], 0);
-  finalTx.set(encodedSigned, 1);
 
-  const rawTx = `0x${Buffer.from(finalTx).toString('hex')}`;
-  return rawTx;
+  return encodeSignedTransaction(encodedSigned);
 };
 
 const buildTransactionPayload = (transaction: Transaction) => {
@@ -48,13 +41,19 @@ const buildTransactionPayload = (transaction: Transaction) => {
   }
 };
 
-const addSignatureToPayload = (
-  payload: any,
-  v: number,
-  r: bigint,
-  s: bigint,
-) => {
-  const payloadWithSignature = [...payload, v, r, s];
+const createMessageHash = (encodedTx: Uint8Array<ArrayBufferLike>) => {
+  const signingPayload = new Uint8Array(1 + encodedTx.length);
+  signingPayload.set([0x02], 0);
+  signingPayload.set(encodedTx, 1);
+  return keccak256(signingPayload);
+};
 
-  return payloadWithSignature;
+const encodeSignedTransaction = (
+  rlpEncodedSig: Uint8Array<ArrayBufferLike>,
+): string => {
+  const finalTx = new Uint8Array(1 + rlpEncodedSig.length);
+  finalTx.set([0x02], 0);
+  finalTx.set(rlpEncodedSig, 1);
+
+  return `0x${Buffer.from(finalTx).toString('hex')}`;
 };
