@@ -18,6 +18,8 @@
 
 # 2. Sign with ethereum-cryptography - TypeScript
 
+Only EIP1559 txs are accepted
+
 ```
 # cd typescript/raw
 
@@ -29,6 +31,8 @@
 ```
 
 # 3. Sign with alloy - Rust
+
+Only EIP1559 txs are accepted
 
 ```
 # cd rust
